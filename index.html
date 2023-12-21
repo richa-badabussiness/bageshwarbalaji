@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahadev11 Game</title>
+    <style>
+        /* Add your styling here */
+        .card {
+            width: 50px;
+            height: 80px;
+            border: 1px solid #000;
+            margin: 5px;
+            display: inline-block;
+            text-align: center;
+            line-height: 80px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Mahadev11 Game</h1>
+
+<div id="cardContainer"></div>
+
+<script>
+    // Function to shuffle an array
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    // Array representing 22 card names
+    const allCardNames = Array.from({ length: 22 }, (_, index) => index + 1);
+
+    // Shuffle the card names
+    shuffleArray(allCardNames);
+
+    // Select 11 cards
+    const selectedCardNames = allCardNames.slice(0, 11);
+
+    // Select a random card as Captain
+    const captainIndex = Math.floor(Math.random() * selectedCardNames.length);
+    const captainCard = selectedCardNames[captainIndex];
+    selectedCardNames.splice(captainIndex, 1); // Remove Captain from the list
+
+    // Select a random card as Vice Captain
+    const viceCaptainIndex = Math.floor(Math.random() * selectedCardNames.length);
+    const viceCaptainCard = selectedCardNames[viceCaptainIndex];
+
+    // Display the selected cards, Captain, and Vice Captain
+    const cardContainer = document.getElementById('cardContainer');
+    selectedCardNames.forEach(card => {
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'card';
+        cardDiv.textContent = `Card ${card}`;
+        cardContainer.appendChild(cardDiv);
+    });
+
+    const captainDiv = document.createElement('div');
+    captainDiv.className = 'card';
+    captainDiv.textContent = `Captain: Card ${captainCard}`;
+    cardContainer.appendChild(captainDiv);
+
+    const viceCaptainDiv = document.createElement('div');
+    viceCaptainDiv.className = 'card';
+    viceCaptainDiv.textContent = `Vice Captain: Card ${viceCaptainCard}`;
+    cardContainer.appendChild(viceCaptainDiv);
+</script>
+
+</body>
+</html>
