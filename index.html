@@ -1,73 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mahadev11 Game</title>
-    <style>
-        /* Add your styling here */
-        .card {
-            width: 50px;
-            height: 80px;
-            border: 1px solid #000;
-            margin: 5px;
-            display: inline-block;
-            text-align: center;
-            line-height: 80px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Magic Boxes</title>
+  <style>
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: lightgray;
+      margin: 10px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
-<h1>Mahadev11 Game</h1>
+<div id="box1" class="box">YES</div>
+<div id="box2" class="box">NO</div>
+<div id="box3" class="box">MAYBE</div>
+<div id="box4" class="box">AS YOU WISH</div>
+<div id="box5" class="box">ASK ME AGAIN</div>
 
-<div id="cardContainer"></div>
+<button onclick="showAllBoxes()">Start</button>
+<button onclick="revealRandomBox()">Refresh</button>
 
 <script>
-    // Function to shuffle an array
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
+  function showAllBoxes() {
+    for (let i = 1; i <= 5; i++) {
+      const box = document.getElementById(`box${i}`);
+      box.style.display = 'flex';
     }
+  }
 
-    // Array representing 22 card names
-    const allCardNames = Array.from({ length: 22 }, (_, index) => index + 1);
+  function revealRandomBox() {
+    // Hide all boxes
+    hideAllBoxes();
 
-    // Shuffle the card names
-    shuffleArray(allCardNames);
+    // Randomly select a box to reveal
+    const randomBoxNumber = Math.floor(Math.random() * 5) + 1;
+    const randomBox = document.getElementById(`box${randomBoxNumber}`);
+    randomBox.style.display = 'flex';
+  }
 
-    // Select 11 cards
-    const selectedCardNames = allCardNames.slice(0, 11);
-
-    // Select a random card as Captain
-    const captainIndex = Math.floor(Math.random() * selectedCardNames.length);
-    const captainCard = selectedCardNames[captainIndex];
-    selectedCardNames.splice(captainIndex, 1); // Remove Captain from the list
-
-    // Select a random card as Vice Captain
-    const viceCaptainIndex = Math.floor(Math.random() * selectedCardNames.length);
-    const viceCaptainCard = selectedCardNames[viceCaptainIndex];
-
-    // Display the selected cards, Captain, and Vice Captain
-    const cardContainer = document.getElementById('cardContainer');
-    selectedCardNames.forEach(card => {
-        const cardDiv = document.createElement('div');
-        cardDiv.className = 'card';
-        cardDiv.textContent = `Card ${card}`;
-        cardContainer.appendChild(cardDiv);
-    });
-
-    const captainDiv = document.createElement('div');
-    captainDiv.className = 'card';
-    captainDiv.textContent = `Captain: Card ${captainCard}`;
-    cardContainer.appendChild(captainDiv);
-
-    const viceCaptainDiv = document.createElement('div');
-    viceCaptainDiv.className = 'card';
-    viceCaptainDiv.textContent = `Vice Captain: Card ${viceCaptainCard}`;
-    cardContainer.appendChild(viceCaptainDiv);
+  function hideAllBoxes() {
+    for (let i = 1; i <= 5; i++) {
+      const box = document.getElementById(`box${i}`);
+      box.style.display = 'none';
+    }
+  }
 </script>
 
 </body>
