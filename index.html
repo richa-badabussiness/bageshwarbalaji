@@ -89,230 +89,257 @@
       cursor: pointer;
     }
   </style>
+
   <!DOCTYPE html>
   <html lang="en">
   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Krishna Tarot Guidance</title>
-      <style>
-          body {
-              font-family: Arial, sans-serif;
-              background-color: #f0f8ff;
-              margin: 0;
-              padding: 0;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 100vh;
-              text-align: center;
-          }
-          .container {
-              background-color: #fff;
-              padding: 20px;
-              border-radius: 8px;
-              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-              width: 300px;
-              max-width: 100%;
-          }
-          h1 {
-              color: #0073e6;
-          }
-          .question-box {
-              width: 100%;
-              padding: 10px;
-              border-radius: 4px;
-              margin-bottom: 15px;
-              border: 1px solid #ccc;
-          }
-          .button {
-              background-color: #0073e6;
-              color: #fff;
-              padding: 10px 20px;
-              border: none;
-              border-radius: 5px;
-              cursor: pointer;
-              font-size: 16px;
-          }
-          .button:hover {
-              background-color: #005bb5;
-          }
-          .card-description {
-              margin-top: 20px;
-              background-color: #f9f9f9;
-              padding: 10px;
-              border-radius: 8px;
-          }
-          .card-title {
-              font-size: 18px;
-              font-weight: bold;
-              margin-bottom: 10px;
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krishna Tarot Guidance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            max-width: 100%;
+        }
+        h1 {
+            color: #0073e6;
+        }
+        .question-box {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+        }
+        .button {
+            background-color: #0073e6;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .button:hover {
+            background-color: #005bb5;
+        }
+        .card-description {
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
 
-          /* Light Red background for guidance result */
-          #guidanceResult {
-              margin-top: 20px;
-              background-color: red; /* Light red color */
-              padding: 10px;
-              border-radius: 8px;
-          }
-      </style>
+        /* Light Red background for guidance result */
+        #guidanceResult {
+            margin-top: 20px;
+            background-color: red; /* Light red color */
+            padding: 10px;
+            border-radius: 8px;
+        }
+    </style>
   </head>
   <body>
 
-  <div class="container">
-      <h1>Krishna Tarot Guidance</h1>
-      <p>Ask your question (maximum 50 words):</p>
-      <textarea id="question" class="question-box" rows="4" maxlength="250"></textarea>
-      <br>
-      <button class="button" onclick="getTarotGuidance()">Ask Tarot</button>
+    <div class="container">
+        <h1>Krishna Tarot Guidance</h1>
+        <p>Ask your question (maximum 50 words):</p>
+        <textarea id="question" class="question-box" rows="4" maxlength="250"></textarea>
+        <br>
+        <button class="button" onclick="getTarotGuidance()">Ask Tarot</button>
 
-      <!-- Guidance Result Section -->
-      <div id="guidanceResult" class="card-description" style="display:none;">
-          <div id="cardName" class="card-title"></div>
-          <div id="cardSummary"></div>
-      </div>
-  </div>
+        <!-- Guidance Result Section -->
+        <div id="guidanceResult" class="card-description" style="display:none;">
+            <div id="cardName" class="card-title"></div>
+            <div id="cardSummary"></div>
+            <div id="cardProbability"></div>
+        </div>
+    </div>
 
-  <script>
-      const tarotCards = [
-          {
-              name: "The Fool",
-              description: "The Fool represents new beginnings, innocence, and taking a leap of faith. A fresh start is coming your way.",
-              yesNo: "Yes, a new adventure awaits!"
-          },
-          {
-              name: "The Magician",
-              description: "The Magician symbolizes skill, resourcefulness, and the ability to manifest your desires into reality.",
-              yesNo: "Yes, you have the power to create your destiny!"
-          },
-          {
-              name: "The High Priestess",
-              description: "The High Priestess is all about intuition, wisdom, and seeking answers within. Trust your inner voice.",
-              yesNo: "Yes, listen to your intuition."
-          },
-          {
-              name: "The Empress",
-              description: "The Empress represents abundance, nurturing, and fertility. You are in a period of growth and creation.",
-              yesNo: "Yes, growth and abundance are coming your way."
-          },
-          {
-              name: "The Emperor",
-              description: "The Emperor stands for authority, stability, and structure. You may need to take charge and establish order.",
-              yesNo: "No, more structure and control are needed."
-          },
-          {
-              name: "The Hierophant",
-              description: "The Hierophant is a symbol of tradition, spiritual wisdom, and guidance from established institutions.",
-              yesNo: "Yes, seek guidance from tradition or a mentor."
-          },
-          {
-              name: "The Lovers",
-              description: "The Lovers card represents harmony, union, and choices in relationships. It indicates a strong connection or decision.",
-              yesNo: "Yes, a harmonious connection is on the horizon."
-          },
-          {
-              name: "The Chariot",
-              description: "The Chariot signifies determination, control, and victory through effort. You are ready to take charge of your life.",
-              yesNo: "Yes, victory is yours with determination."
-          },
-          {
-              name: "Strength",
-              description: "Strength symbolizes courage, patience, and resilience. It’s a reminder to face challenges with inner strength.",
-              yesNo: "Yes, your inner strength will carry you through."
-          },
-          {
-              name: "The Hermit",
-              description: "The Hermit represents introspection, solitude, and wisdom gained from within. Take time to reflect and recharge.",
-              yesNo: "No, retreat and reflect before acting."
-          },
-          {
-              name: "Wheel of Fortune",
-              description: "The Wheel of Fortune symbolizes cycles, destiny, and change. Life is in motion, and fortune is turning in your favor.",
-              yesNo: "Yes, fate is on your side!"
-          },
-          {
-              name: "Justice",
-              description: "Justice stands for fairness, balance, and truth. You may soon face a decision that requires impartial judgment.",
-              yesNo: "Yes, fairness and balance will prevail."
-          },
-          {
-              name: "The Hanged Man",
-              description: "The Hanged Man signals suspension, sacrifice, and gaining a new perspective. Let go of old patterns to move forward.",
-              yesNo: "No, pause and reflect before proceeding."
-          },
-          {
-              name: "Death",
-              description: "Death symbolizes transformation, endings, and the beginning of something new. It marks the end of a cycle.",
-              yesNo: "Yes, transformation is at hand."
-          },
-          {
-              name: "Temperance",
-              description: "Temperance represents balance, patience, and moderation. This card urges you to find harmony in your actions.",
-              yesNo: "Yes, balance is key right now."
-          },
-          {
-              name: "The Devil",
-              description: "The Devil represents temptation, addiction, or unhealthy attachments. It's time to break free from limitations.",
-              yesNo: "No, it's time to free yourself from toxic influences."
-          },
-          {
-              name: "The Tower",
-              description: "The Tower signals sudden upheaval, destruction, and revelations. Be prepared for unexpected changes.",
-              yesNo: "No, be ready for a shake-up."
-          },
-          {
-              name: "The Star",
-              description: "The Star represents hope, inspiration, and guidance. You are on the right path and should have faith.",
-              yesNo: "Yes, keep faith, your path is clear."
-          },
-          {
-              name: "The Moon",
-              description: "The Moon is about illusion, intuition, and the unconscious mind. Trust your instincts, but be cautious of deception.",
-              yesNo: "No, trust your instincts, but stay alert."
-          },
-          {
-              name: "The Sun",
-              description: "The Sun represents positivity, success, and vitality. Everything is aligning in your favor.",
-              yesNo: "Yes, happiness and success are coming!"
-          },
-          {
-              name: "Judgment",
-              description: "Judgment represents reflection, reckoning, and a call to action. A new phase of life awaits you.",
-              yesNo: "Yes, a new chapter is beginning."
-          },
-          {
-              name: "The World",
-              description: "The World signifies completion, wholeness, and achievement. You’ve reached a milestone in your journey.",
-              yesNo: "Yes, the cycle is complete, and success is yours!"
-          }
-      ];
+    <script>
+        const tarotCards = [
+            {
+                name: "The Fool",
+                description: "The Fool represents new beginnings, innocence, and taking a leap of faith. A fresh start is coming your way.",
+                yesNo: "Yes, a new adventure awaits!",
+                yesNoProbability: 90
+            },
+            {
+                name: "The Magician",
+                description: "The Magician symbolizes skill, resourcefulness, and the ability to manifest your desires into reality.",
+                yesNo: "Yes, you have the power to create your destiny!",
+                yesNoProbability: 85
+            },
+            {
+                name: "The High Priestess",
+                description: "The High Priestess is all about intuition, wisdom, and seeking answers within. Trust your inner voice.",
+                yesNo: "Yes, listen to your intuition.",
+                yesNoProbability: 80
+            },
+            {
+                name: "The Empress",
+                description: "The Empress represents abundance, nurturing, and fertility. You are in a period of growth and creation.",
+                yesNo: "Yes, growth and abundance are coming your way.",
+                yesNoProbability: 95
+            },
+            {
+                name: "The Emperor",
+                description: "The Emperor stands for authority, stability, and structure. You may need to take charge and establish order.",
+                yesNo: "No, more structure and control are needed.",
+                yesNoProbability: 70
+            },
+            {
+                name: "The Hierophant",
+                description: "The Hierophant is a symbol of tradition, spiritual wisdom, and guidance from established institutions.",
+                yesNo: "Yes, seek guidance from tradition or a mentor.",
+                yesNoProbability: 75
+            },
+            {
+                name: "The Lovers",
+                description: "The Lovers card represents harmony, union, and choices in relationships. It indicates a strong connection or decision.",
+                yesNo: "Yes, a harmonious connection is on the horizon.",
+                yesNoProbability: 70
+            },
+            {
+                name: "The Chariot",
+                description: "The Chariot signifies determination, control, and victory through effort. You are ready to take charge of your life.",
+                yesNo: "Yes, victory is yours with determination.",
+                yesNoProbability: 85
+            },
+            {
+                name: "Strength",
+                description: "Strength symbolizes courage, patience, and resilience. It’s a reminder to face challenges with inner strength.",
+                yesNo: "Yes, your inner strength will carry you through.",
+                yesNoProbability: 80
+            },
+            {
+                name: "The Hermit",
+                description: "The Hermit represents introspection, solitude, and wisdom gained from within. Take time to reflect and recharge.",
+                yesNo: "No, retreat and reflect before acting.",
+                yesNoProbability: 60
+            },
+            {
+                name: "Wheel of Fortune",
+                description: "The Wheel of Fortune symbolizes cycles, destiny, and change. Life is in motion, and fortune is turning in your favor.",
+                yesNo: "Yes, fate is on your side!",
+                yesNoProbability: 90
+            },
+            {
+                name: "Justice",
+                description: "Justice stands for fairness, balance, and truth. You may soon face a decision that requires impartial judgment.",
+                yesNo: "Yes, fairness and balance will prevail.",
+                yesNoProbability: 80
+            },
+            {
+                name: "The Hanged Man",
+                description: "The Hanged Man signals suspension, sacrifice, and gaining a new perspective. Let go of old patterns to move forward.",
+                yesNo: "No, pause and reflect before proceeding.",
+                yesNoProbability: 65
+            },
+            {
+                name: "Death",
+                description: "Death symbolizes transformation, endings, and the beginning of something new. It marks the end of a cycle.",
+                yesNo: "Yes, transformation is at hand.",
+                yesNoProbability: 85
+            },
+            {
+                name: "Temperance",
+                description: "Temperance represents balance, patience, and moderation. This card urges you to find harmony in your actions.",
+                yesNo: "Yes, balance is key right now.",
+                yesNoProbability: 75
+            },
+            {
+                name: "The Devil",
+                description: "The Devil represents temptation, addiction, or unhealthy attachments. It's time to break free from limitations.",
+                yesNo: "No, it's time to free yourself from toxic influences.",
+                yesNoProbability: 50
+            },
+            {
+                name: "The Tower",
+                description: "The Tower signals sudden upheaval, destruction, and revelations. Be prepared for unexpected changes.",
+                yesNo: "No, be ready for a shake-up.",
+                yesNoProbability: 60
+            },
+            {
+                name: "The Star",
+                description: "The Star represents hope, inspiration, and guidance. You are on the right path and should have faith.",
+                yesNo: "Yes, keep faith, your path is clear.",
+                yesNoProbability: 90
+            },
+            {
+                name: "The Moon",
+                description: "The Moon is about illusion, intuition, and the unconscious mind. Trust your instincts, but be cautious of deception.",
+                yesNo: "No, trust your instincts, but stay alert.",
+                yesNoProbability: 50
+            },
+            {
+                name: "The Sun",
+                description: "The Sun represents positivity, success, and vitality. Everything is aligning in your favor.",
+                yesNo: "Yes, happiness and success are coming!",
+                yesNoProbability: 95
+            },
+            {
+                name: "Judgment",
+                description: "Judgment represents reflection, reckoning, and a call to action. A new phase of life awaits you.",
+                yesNo: "Yes, a new chapter is beginning.",
+                yesNoProbability: 85
+            },
+            {
+                name: "The World",
+                description: "The World signifies completion, wholeness, and achievement. You’ve reached a milestone in your journey.",
+                yesNo: "Yes, the cycle is complete, and success is yours!",
+                yesNoProbability: 90
+            }
+        ];
 
-      function getTarotGuidance() {
-          const question = document.getElementById('question').value;
-          if (question.trim() === "") {
-              alert("Please ask a question.");
-              return;
-          }
+        function getTarotGuidance() {
+            const question = document.getElementById('question').value;
+            if (question.trim() === "") {
+                alert("Please ask a question.");
+                return;
+            }
 
-          // Select a random card
-          const randomCardIndex = Math.floor(Math.random() * tarotCards.length);
-          const chosenCard = tarotCards[randomCardIndex];
+            // Select a random card
+            const randomCardIndex = Math.floor(Math.random() * tarotCards.length);
+            const chosenCard = tarotCards[randomCardIndex];
 
-          // Show guidance
-          document.getElementById('cardName').innerHTML = chosenCard.name;
-          document.getElementById('cardSummary').innerHTML = `
-              <strong>Guidance:</strong> ${chosenCard.description} <br>
-              <strong>Answer:</strong> ${chosenCard.yesNo}
-          `;
+            // Show guidance
+            document.getElementById('cardName').innerHTML = chosenCard.name;
+            document.getElementById('cardSummary').innerHTML = `
+                <strong>Guidance:</strong> ${chosenCard.description} <br>
+                <strong>Answer:</strong> ${chosenCard.yesNo}
+            `;
+            document.getElementById('cardProbability').innerHTML = `
+                <strong>Probability of Answer:</strong> ${chosenCard.yesNoProbability}%
+            `;
 
-          // Display result
-          document.getElementById('guidanceResult').style.display = 'block';
+            // Display result
+            document.getElementById('guidanceResult').style.display = 'block';
 
-          // Clear the question input for the next round
-          document.getElementById('question').value = "";
-      }
-  </script>
+            // Clear the question input for the next round
+            document.getElementById('question').value = "";
+        }
+    </script>
 
   </body>
   </html>
