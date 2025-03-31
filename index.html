@@ -342,4 +342,39 @@
     </script>
 
   </body>
-  </html>
+  </html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Choice</title>
+</head>
+<body>
+    <h2>Choose 1 out of 4</h2>
+    <input type="text" id="option1" placeholder="Enter option 1">
+    <input type="text" id="option2" placeholder="Enter option 2">
+    <input type="text" id="option3" placeholder="Enter option 3">
+    <input type="text" id="option4" placeholder="Enter option 4">
+    <br><br>
+    <p id="result">Click the button to choose</p>
+    <button onclick="chooseRandom()">Pick One</button>
+
+    <script>
+        function chooseRandom() {
+            const options = [
+                document.getElementById("option1").value,
+                document.getElementById("option2").value,
+                document.getElementById("option3").value,
+                document.getElementById("option4").value
+            ].filter(option => option.trim() !== "");
+
+            if (options.length > 0) {
+                const randomIndex = Math.floor(Math.random() * options.length);
+                document.getElementById("result").innerText = "Chosen: " + options[randomIndex];
+            } else {
+                document.getElementById("result").innerText = "Please enter at least one option.";
+            }
+        }
+    </script>
+</body>
+</html>
